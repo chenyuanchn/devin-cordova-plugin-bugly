@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="devin-cordova-plugin-bugly" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>devin-cordova-plugin-bugly</name>
+    <preference name="BUGLY_APPID_ANDROID" />
+    <preference name="BUGLY_APPID_IOS" />
+    <preference name="BUGLY_ENABLE_DEBUG" />
+    <!--<preference name="APP_VERSION" />-->
+    <js-module name="bugly" src="www/devin-cordova-plugin-bugly.js">
+        <runs/>
+        <clobbers target="cordova.plugins.bugly" />
+    </js-module>
+
+    <platform name="ios">
+        <config-file parent="/*" target="config.xml">
+            <feature name="bugly">
+                <param name="ios-package" value="DevinCordovaPluginBugly" onload="true"/>
+            </feature>
+        </config-file>
+        <header-file src="src/ios/DevinCordovaPluginBugly.h" />
+        <source-file src="src/ios/DevinCordovaPluginBugly.m" />
+        <!--<framework src="src/ios/lib/Bugly.framework" />-->
+        <source-file src="src/ios/lib/Bugly.framework" framework="true" />
+        <framework src="SystemConfiguration.framework"/>
+        <framework src="Security.framework" />
+        <framework src="libz.tbd"/>
+        <framework src="libc++.tbd"/>
+
+         <config-file target="*-Info.plist" parent="BuglyAppIDString">
+             <string>$BUGLY_APPID_IOS</string>
+         </config-file>
+          <!--<config-file target="*-Info.plist" parent="BuglyAppChannelString">-->
+             <!--<string>DMBUGLY</string>-->
+         <!--</config-file>-->
+          <!--<config-file target="*-Info.plist" parent="BuglyAppVersionString">-->
+             <!--<string>$APP_VERSION</string>-->
+         <!--</config-file>-->
+          <!--<config-file target="*-Info.plist" parent="BuglyAppDebugEnable">-->
+             <!--<false/>-->
+         <!--</config-file>-->
+        <config-file target="*-Info.plist" parent="BuglyAppDebugEnable">
+            <string>$BUGLY_ENABLE_DEBUG</string>
+        </config-file>
+    </platform>
+
+    <platform name="android">
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="bugly">
+                <param name="android-package" value="com.devin.plugins.bugly.DevinCordovaPluginBugly" />
+                <param name="onload" value="true" />
+            </feature>
+        </config-file>
+        <config-file parent="/manifest" target="AndroidManifest.xml">
+            <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+            <uses-permission android:name="android.permission.INTERNET" />
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+            <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+            <uses-permission android:name="android.permission.READ_LOGS" />
+        </config-file>
+        <config-file parent="/manifest/application" target="AndroidManifest.xml">
+            <!-- 配置APP ID -->
+            <meta-data
+                    android:name="BUGLY_APPID"
+                    android:value="$BUGLY_APPID_ANDROID" />
+            <!-- 配置APP版本号 -->
+            <!--<meta-data-->
+                    <!--android:name="BUGLY_APP_VERSION"-->
+                    <!--android:value="$APP_VERSION" />-->
+            <!-- 配置APP渠道号 -->
+            <!--<meta-data-->
+                    <!--android:name="BUGLY_APP_CHANNEL"-->
+                    <!--android:value="DM-BUG-MANAGER" />-->
+            <!-- 配置Bugly调试模式（true或者false）-->
+            <meta-data
+                    android:name="BUGLY_ENABLE_DEBUG"
+                    android:value="$BUGLY_ENABLE_DEBUG" />
+        </config-file>
+        <source-file src="src/android/DevinCordovaPluginBugly.java" target-dir="src/com/devin/plugins/bugly" />
+        <framework src="src/android/bugly.gradle" custom="true" type="gradleReference"/>
+    </platform>
+</plugin>

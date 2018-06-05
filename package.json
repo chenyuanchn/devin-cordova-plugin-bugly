@@ -1,0 +1,13 @@
+{
+  "name": "devin-cordova-plugin-bugly",
+  "version": "0.0.1",
+  "description": "bugly的插件",
+  "cordova": {
+    "id": "devin-cordova-plugin-bugly",
+    "platforms": []
+  },
+  "keywords": [
+    "ecosystem:cordova"
+  ],
+  "author": "devin shi"
+}
